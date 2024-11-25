@@ -1,7 +1,6 @@
+# MongoDB Examples: PyMongo, Beanie, Motor, and FastAPI  
 
-# MongoDB Examples: PyMongo, Beanie, and Motor  
-
-This repository demonstrates how to work with **MongoDB** in Python using three powerful libraries: **PyMongo**, **Beanie**, and **Motor**. Each folder contains examples of CRUD operations, schema modeling, and advanced features.
+This repository demonstrates how to work with **MongoDB** in Python using four powerful tools: **PyMongo**, **Beanie**, **Motor**, and **FastAPI**. Each folder contains examples of CRUD operations, schema modeling, and advanced features.
 
 ---
 
@@ -9,7 +8,7 @@ This repository demonstrates how to work with **MongoDB** in Python using three 
 - **PyMongo**: Direct interaction with MongoDB for CRUD and aggregation operations.  
 - **Beanie**: An ODM leveraging Pydantic for schema modeling and asynchronous workflows.  
 - **Motor**: An asynchronous MongoDB driver for high-performance applications.  
-
+- **FastAPI**: A modern, fast (high-performance) web framework for building APIs with Python, based on standard Python type hints.
 ---
 
 ## Prerequisites  
@@ -55,7 +54,9 @@ Navigate to the `pymongo/` folder to find examples of:
 
 Run an example:  
 ```bash
-python pymongo/main.py  
+cd pymongo
+docker compose up
+uvicorn app.main:app --reload
 ```
 
 ---
@@ -68,7 +69,9 @@ Navigate to the `beanie/` folder to explore:
 
 Run an example:  
 ```bash
-python beanie/main.py  
+cd beanie
+docker compose up
+uvicorn app.main:app --reload
 ```
 
 ---
@@ -79,12 +82,17 @@ Navigate to the `motor/` folder to see:
 - Using async/await for CRUD and aggregation  
 - Integrating with FastAPI (optional)  
 
-Run an example:  
+Run:  
 ```bash
-python motor/main.py  
+cd motor
+docker compose up
+uvicorn app.main:app --reload
 ```
 
----
+Once the server is running, visit:  
+- Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)  
+- ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+
 <!-- 
 ## Folder Structure  
 
@@ -110,14 +118,14 @@ The `requirements.txt` file includes:
 - PyMongo  
 - Beanie  
 - Motor  
-- Pydantic  
+- FastAPI  
+- Uvicorn (for running the FastAPI app)  
+- Pydantic   
 
 Install all dependencies:  
 ```bash
 pip install -r requirements.txt  
 ```
-
-
 
 ---
 
