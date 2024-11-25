@@ -15,10 +15,7 @@ This repository demonstrates how to work with **MongoDB** in Python using three 
 ## Prerequisites  
 - Python 3.10 or higher  
 - MongoDB installed locally or available via a cloud service like [MongoDB Atlas](https://www.mongodb.com/atlas).
-- Docker:
-    ```bash
-    docker compose up
-    ``` 
+- Docker (Optional) 
 
 ---
 
@@ -30,11 +27,10 @@ This repository demonstrates how to work with **MongoDB** in Python using three 
    ```
 
 2. Set up a virtual environment: 
-    ### MacOS/Linux
+    ### Linux/macOS
    ```bash
    python -m venv venv  
    source venv/bin/activate  
-
    ```
     ### Windows
    ``` bash
