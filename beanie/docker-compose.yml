@@ -1,5 +1,5 @@
 services:
-  mongodb:
+  mongo:
     container_name: "chat_service_mongodb"
     image: mongo:6.0.3
     restart: always
