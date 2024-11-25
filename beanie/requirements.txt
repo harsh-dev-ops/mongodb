@@ -2,3 +2,5 @@ pydantic
 pydantic-settings
 beanie
 python-multipart
+fastapi[all]
+uvicorn
