@@ -5,7 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 
 from app.api.views import api_router
-from app.api.auth import token
 from app.conf.settings import settings
 from app.database.session import db_lifespan
 
@@ -33,10 +32,4 @@ app.add_middleware(
 app.include_router(
     api_router,
     prefix=''
-)
-
-app.include_router(
-    token.router,
-    prefix='/api',
-    tags=['Beanie'],
 )
