@@ -40,7 +40,7 @@ class Settings(BaseSettings):
     REDIS_BACKEND_URL: str = Field(
         os.getenv('REDIS_BACKEND_URL', "redis://localhost:6379/0"))
 
-    class os.getenv:
+    class config:
         env_file = '.env'
 
 

@@ -4,3 +4,4 @@ beanie
 python-multipart
 fastapi[all]
 uvicorn
+pytz
