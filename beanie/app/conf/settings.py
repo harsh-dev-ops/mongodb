@@ -15,10 +15,19 @@ def _mongo_url():
     root_password = os.getenv('MONGO_INITDB_ROOT_PASSWORD')
     host = os.getenv('MONGO_HOST')
     port = os.getenv('MONGO_PORT')
-    init_database = os.getenv('MONGO_DATABASE')
+    init_database = os.getenv('MONGO_DATABASE') 
     url = f"mongodb://{root_user_name}:{root_password}@{host}:{port}/{init_database}?authSource=admin&retryWrites=true&w=majority"
     return url
 
+def _TEST_MONGO_URL():
+    root_user_name = os.getenv('TEST_MONGO_INITDB_ROOT_USERNAME')
+    root_password = os.getenv('TEST_MONGO_INITDB_ROOT_PASSWORD')
+    host = os.getenv('TEST_MONGO_HOST')
+    port = os.getenv('TEST_MONGO_PORT')
+    init_database = os.getenv('TEST_MONGO_DATABASE') 
+    url = f"mongodb://{root_user_name}:{root_password}@{host}:{port}/{init_database}?authSource=admin&retryWrites=true&w=majority"
+    return url
+    
 
 class Settings(BaseSettings):
     ENV: str
@@ -33,6 +42,7 @@ class Settings(BaseSettings):
     MONGO_USER: str
     MONGO_PASSWORD: str
     MONGO_URL: str = Field(_mongo_url())
+    TEST_MONGO_URL: str = Field(_TEST_MONGO_URL())
 
     CLIENT_ORIGIN: str
     ALLOWED_ORIGIN: List[str] = os.getenv('CLIENT_ORIGIN', "http://localhost:3000").split(",")

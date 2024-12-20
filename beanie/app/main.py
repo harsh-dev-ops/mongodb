@@ -12,7 +12,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-app: FastAPI = FastAPI(lifespan=db_lifespan)
+app = FastAPI(lifespan=db_lifespan)
 
 for folder in ['app/static', 'app/templates']:
     os.makedirs(folder, exist_ok=True)

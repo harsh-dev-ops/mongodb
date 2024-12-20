@@ -14,5 +14,23 @@ services:
     volumes:
       - mongodata:/data/db
 
+  
+  test_mongo:
+    image: mongo:6.0.3
+    restart: always
+    ports:
+      - 27019:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${TEST_MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${TEST_MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${TEST_MONGO_INITDB_DATABASE}
+      MONGO_DATABASE: ${TEST_MONGO_DATABASE}
+      MONGO_USER: ${TEST_MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongodata:/data/db
+
+
+
 volumes:
   mongodata:
