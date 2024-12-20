@@ -12,6 +12,8 @@ document_models = [
     UserModel
     ]
 
+MONGO_URI = settings.TEST_MONGO_URL if settings.ENV == 'test' else settings.MONGO_URL
+
 @asynccontextmanager
 async def db_lifespan(app: FastAPI):
     # Startup

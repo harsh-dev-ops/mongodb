@@ -19,7 +19,7 @@ def _mongo_url():
     url = f"mongodb://{root_user_name}:{root_password}@{host}:{port}/{init_database}?authSource=admin&retryWrites=true&w=majority"
     return url
 
-def _TEST_MONGO_URL():
+def _test_mongo_url():
     root_user_name = os.getenv('TEST_MONGO_INITDB_ROOT_USERNAME')
     root_password = os.getenv('TEST_MONGO_INITDB_ROOT_PASSWORD')
     host = os.getenv('TEST_MONGO_HOST')
@@ -42,7 +42,7 @@ class Settings(BaseSettings):
     MONGO_USER: str
     MONGO_PASSWORD: str
     MONGO_URL: str = Field(_mongo_url())
-    TEST_MONGO_URL: str = Field(_TEST_MONGO_URL())
+    TEST_MONGO_URL: str = Field(_test_mongo_url())
 
     CLIENT_ORIGIN: str
     ALLOWED_ORIGIN: List[str] = os.getenv('CLIENT_ORIGIN', "http://localhost:3000").split(",")

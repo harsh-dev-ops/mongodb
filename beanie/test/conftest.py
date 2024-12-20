@@ -9,8 +9,10 @@ from fastapi import FastAPI
 
 from app.conf.settings import settings
 from app.database.session import document_models
-from app.main import app
 
+settings.ENV = 'test'
+
+from app.main import app
 
 async def clear_database(server: FastAPI) -> None:
     async for collection in await server.database.list_collections():  # type: ignore[attr-defined]
