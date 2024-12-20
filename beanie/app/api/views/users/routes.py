@@ -1,6 +1,7 @@
 import uuid
 from fastapi import APIRouter, status
 
+from app.api.views.users.factory import UserServiceFactory
 from app.api.views.users.schema import UserCreate, UserOut, UserUpdate
 from app.api.views.users.services import UserService
 
@@ -9,9 +10,9 @@ router = APIRouter()
 
 @router.get('')
 async def get_all_users():
-    return await UserService().get_users()
-
-
+    factory = UserServiceFactory()
+    service = factory.user_service()
+    return await service.get_users()
 
 @router.get(
     '/{uid}',
@@ -19,8 +20,9 @@ async def get_all_users():
     response_model=UserOut
 )
 async def get_user(uid: uuid.UUID):
-    return await UserService().get_user(uid)
-
+    factory = UserServiceFactory()
+    service = factory.user_service()
+    return await service.get_user(uid)
 
 @router.post(
     '',
@@ -29,8 +31,9 @@ async def get_user(uid: uuid.UUID):
     status_code=status.HTTP_201_CREATED,
 )
 async def create_user(payload: UserCreate):
-    return await UserService().create_user(payload)
-
+    factory = UserServiceFactory()
+    service = factory.user_service()
+    return await service.create_user(payload)
 
 @router.patch(
     '',
@@ -39,7 +42,9 @@ async def create_user(payload: UserCreate):
     status_code=status.HTTP_200_OK,
 )
 async def update_user(payload: UserUpdate):
-    return await UserService().update_user(payload)
+    factory = UserServiceFactory()
+    service = factory.user_service()
+    return await service.update_user(payload)
 
 
 @router.delete(
@@ -48,4 +53,6 @@ async def update_user(payload: UserUpdate):
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_user(uid: uuid.UUID):
-    return await UserService().delete_user(uid)
+    factory = UserServiceFactory()
+    service = factory.user_service()
+    return await service.delete_user(uid)
