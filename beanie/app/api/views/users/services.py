@@ -4,10 +4,7 @@ from app.api.views.users.schema import UserCreate, UserUpdate
 
 
 class UserService:
-    def __init__(
-            self,
-                 user_crud = UserCrud()
-                 ):
+    def __init__(self, user_crud = UserCrud()):
         self._user_crud = user_crud
 
     async def get_users(self):
