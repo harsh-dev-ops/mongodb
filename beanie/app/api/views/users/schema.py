@@ -19,7 +19,7 @@ class UserOut(UserBase):
 
 
 class UserCreate(UserBase):
-    pass
+    uid: UUID4
 
 
 class UserUpdate(BaseModel):
