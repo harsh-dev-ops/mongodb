@@ -9,9 +9,6 @@ from fastapi import FastAPI
 
 from app.conf.settings import settings
 from app.database.session import document_models
-
-settings.ENV = 'test'
-
 from app.main import app
 
 async def clear_database(server: FastAPI) -> None:
