@@ -4,11 +4,13 @@ from beanie import init_beanie
 from contextlib import asynccontextmanager
 from logging import info
 
-# from app.api.views.users.models import User
+from app.api.views.users.models import UserModel
 from app.conf.settings import settings
 
 
-document_models = []
+document_models = [
+    UserModel
+    ]
 
 @asynccontextmanager
 async def db_lifespan(app: FastAPI):

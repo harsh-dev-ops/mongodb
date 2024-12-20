@@ -15,7 +15,7 @@ def _mongo_url():
     root_password = os.getenv('MONGO_INITDB_ROOT_PASSWORD')
     host = os.getenv('MONGO_HOST')
     port = os.getenv('MONGO_PORT')
-    init_database = os.getenv('MONGO_INITDB_DATABASE')
+    init_database = os.getenv('MONGO_DATABASE')
     url = f"mongodb://{root_user_name}:{root_password}@{host}:{port}/{init_database}?authSource=admin&retryWrites=true&w=majority"
     return url
 
