@@ -10,6 +10,18 @@ asia_timezone = pytz.timezone('Asia/Kolkata')
 def current_datetime() -> datetime:
     return datetime.now(asia_timezone)
 
+def _mongo_url():
+    root_user_name = os.getenv('MONGO_INITDB_ROOT_USERNAME')
+    root_password = os.getenv('MONGO_INITDB_ROOT_PASSWORD')
+    host = os.getenv('MONGO_HOST')
+    port = os.getenv('MONGO_PORT')
+    init_database = os.getenv('MONGO_INITDB_DATABASE')
+    url = f"mongodb://{root_user_name}:{root_password}@{host}:{port}/{init_database}?authSource=admin&retryWrites=true&w=majority"
+    return url
+
+print(_mongo_url())
+
+
 
 class Settings(BaseSettings):
     ENV: str
@@ -23,9 +35,7 @@ class Settings(BaseSettings):
     MONGO_DATABASE: str
     MONGO_USER: str
     MONGO_PASSWORD: str
-    MONGO_URL: str = Field(
-        f"""mongodb://{os.getenv('MONGO_INITDB_ROOT_USERNAME')}:{os.getenv(
-        'MONGO_INITDB_ROOT_PASSWORD')}@{os.getenv('MONGO_HOST')}/{os.getenv('MONGO_INITDB_DATABASE')}?authSource=admin&retryWrites=true&w=majority""")
+    MONGO_URL: str = Field(_mongo_url())
 
     CLIENT_ORIGIN: str
     ALLOWED_ORIGIN: List[str] = os.getenv('CLIENT_ORIGIN', "http://localhost:3000").split(",")
