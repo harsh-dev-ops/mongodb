@@ -1,6 +1,7 @@
+import uuid
 from fastapi import APIRouter, status
 
-from app.api.views.users.schema import UserCreate, UserOut
+from app.api.views.users.schema import UserCreate, UserOut, UserUpdate
 from app.api.views.users.services import UserService
 
 
@@ -13,12 +14,12 @@ async def get_all_users():
 
 
 @router.get(
-    '/{user_id}',
+    '/{uid}',
     summary="Get user by id",
     response_model=UserOut
 )
-async def get_user(user_id: str):
-    return await GetUser.user(user_id)
+async def get_user(uid: uuid.UUID):
+    return await UserService().get_user(uid)
 
 
 @router.post(
@@ -32,19 +33,19 @@ async def create_user(payload: UserCreate):
 
 
 @router.patch(
-    '/{user_id}',
+    '',
     summary="Update user",
     response_model=UserOut,
     status_code=status.HTTP_200_OK,
 )
-async def update_user(user_id: str):
-    return {}
+async def update_user(payload: UserUpdate):
+    return await UserService().update_user(payload)
 
 
 @router.delete(
-    '/{user_id}',
+    '/{uid}',
     summary="Delete user",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_user(user_id: str):
-    return None
+async def delete_user(uid: uuid.UUID):
+    return await UserService().delete_user(uid)

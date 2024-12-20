@@ -23,6 +23,7 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(BaseModel):
+    uid: UUID4
     name: str | None = Field(None)
     email: EmailStr | None = Field(None)
     superuser: bool | None = Field(None)

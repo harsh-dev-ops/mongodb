@@ -39,13 +39,20 @@ class BaseCrud(CrudMixins):
 
     async def update(self, id: str, data: dict) -> Document:
         obj = await self.model.find_one(self.model.id == id)
+        await self.update_obj(obj, data)
+    
+    async def update_obj(self, obj: Base, data: dict) -> Document:
         await self.missing_obj(obj)
-        if obj:
-            obj.update(**data)
-            return obj
+        for key, value in data.items():
+            setattr(obj, key, value)
+        await obj.save()
+        return obj
 
     async def delete(self, id: str) -> Document:
         obj = await self.model.find_one(self.model.id == id)
+        await self.delete_obj(obj)
+    
+    async def delete_obj(self, obj: Document):
         await self.missing_obj(obj)
-        if obj:
-            return obj.delete()
+        await obj.delete()
+
