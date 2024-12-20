@@ -11,6 +11,11 @@ from app.conf.settings import settings
 from app.database.session import document_models
 from app.main import app
 
+async def init_db(app):
+    app.mongo_client = AsyncIOMotorClient(settings.TEST_MONGO_URL)
+    app.database = app.mongo_client.get_default_database()
+    await init_beanie(app.database, document_models=document_models)
+
 async def clear_database(server: FastAPI) -> None:
     async for collection in await server.database.list_collections():  # type: ignore[attr-defined]
         await server.database[collection["name"]].delete_many({}) 
@@ -18,6 +23,7 @@ async def clear_database(server: FastAPI) -> None:
 @pytest_asyncio.fixture()
 async def client() -> AsyncIterator[AsyncClient]:
     async with LifespanManager(app):
+        await init_db(app)
         async with AsyncClient(app=app, base_url="http://test") as _client:
             try:
                 yield _client
