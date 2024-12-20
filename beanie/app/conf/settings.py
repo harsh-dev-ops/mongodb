@@ -19,9 +19,6 @@ def _mongo_url():
     url = f"mongodb://{root_user_name}:{root_password}@{host}:{port}/{init_database}?authSource=admin&retryWrites=true&w=majority"
     return url
 
-print(_mongo_url())
-
-
 
 class Settings(BaseSettings):
     ENV: str
