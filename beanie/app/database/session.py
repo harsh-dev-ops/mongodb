@@ -16,8 +16,8 @@ document_models = [
 async def db_lifespan(app: FastAPI):
     # Startup
     # breakpoint()
-    app.client = AsyncIOMotorClient(settings.MONGO_URL)
-    app.database = app.client.get_default_database()
+    app.mongo_client = AsyncIOMotorClient(settings.MONGO_URL)
+    app.database = app.mongo_client.get_default_database()
     await init_beanie(app.database, document_models=document_models)
     ping_response = await app.database.command("ping")
     if int(ping_response["ok"]) != 1:
@@ -27,4 +27,4 @@ async def db_lifespan(app: FastAPI):
     yield
 
     # Shutdown
-    app.client.close()
+    app.mongo_client.close()

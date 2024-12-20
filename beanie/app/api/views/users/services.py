@@ -21,7 +21,6 @@ class UserService:
         user_uuid = payload.uid
         user = await self._user_crud.get_by_uid(user_uuid)
         data = payload.model_dump(exclude=['uid'], exclude_none=True)
-
         return await self._user_crud.update_obj(user, data)
     
     async def delete_user(self, uid: uuid.UUID):

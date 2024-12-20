@@ -31,6 +31,7 @@ class BaseCrud(CrudMixins):
 
     async def get_by_uid(self, uid: str) -> Document:
         obj = await self.model.find(self.model.uid == uid).first_or_none()
+        await self.missing_obj(obj)
         return obj
 
     async def create(self, data: dict) -> Document:
