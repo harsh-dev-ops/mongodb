@@ -7,9 +7,10 @@ from app.database.models.base import Base
 from pydantic import UUID4, BaseModel, Field
 
 class ChatRoomModel(Base):
+    uid: UUID4 = Field(default_factory=uuid.uuid4, unique=True, index=True)
     name: str
     messages: List[Link[ChatModel]]
     members: List[Link[UserModel]]
 
     class Settings:
-        name = "users"
+        name = "chat_rooms"
