@@ -1,11 +1,11 @@
 from typing import Annotated, List
 import uuid
-from beanie import BackLink, Document, Indexed
+from beanie import BackLink, Document, Indexed, Link
 from app.database.models.base import Base
-from pydantic import UUID4, BaseModel, Field, Link
+from pydantic import UUID4, BaseModel, Field
 
 class UserModel(Base):
-    id: Annotated[int, Indexed(unique=True)]
+    id: Annotated[int, Indexed()]
     uid: UUID4 = Field(default_factory=uuid.uuid4, unique=True, index=True)
     name: str
     email: str

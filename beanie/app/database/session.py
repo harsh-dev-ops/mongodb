@@ -12,13 +12,12 @@ document_models = [
     UserModel
     ]
 
-MONGO_URI = settings.TEST_MONGO_URL if settings.ENV == 'test' else settings.MONGO_URL
 
 @asynccontextmanager
 async def db_lifespan(app: FastAPI):
     # Startup
     # breakpoint()
-    app.mongo_client = AsyncIOMotorClient(MONGO_URI)
+    app.mongo_client = AsyncIOMotorClient(settings.MONGO_URL)
     app.database = app.mongo_client.get_default_database()
     await init_beanie(app.database, document_models=document_models)
     ping_response = await app.database.command("ping")
