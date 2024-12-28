@@ -1,3 +1,4 @@
+from beanie import PydanticObjectId
 from fastapi import APIRouter, status
 
 from app.api.views.chats.factory import *
@@ -12,7 +13,7 @@ async def get_chats(group_uid: uuid.UUID):
     pass
 
 @router.get('/{_id}')
-async def get_chat(_id: str):
+async def get_chat(_id: PydanticObjectId):
     pass
 
 @router.post('/message')
@@ -36,5 +37,5 @@ async def update_group_message(payload: UpdateGroupMessage):
 
 
 @router.delete('/{_id}')
-async def delete_message(_id: str):
+async def delete_message(_id: PydanticObjectId):
     pass

@@ -1,4 +1,6 @@
 import uuid
+
+from beanie import PydanticObjectId
 from app.api.views.chats.crud import ChatCrud
 from app.api.views.chats import schemas
 
@@ -10,7 +12,7 @@ class ChatService:
     def get_chats(self, group_uid: uuid.UUID):
         pass
 
-    def get_chat(self, _id: str):
+    def get_chat(self, _id: PydanticObjectId):
         pass
 
     def create_chat(self, payload: schemas.CreateMessage):
@@ -25,5 +27,5 @@ class ChatService:
     def update_group_message(self, payload: schemas.UpdateGroupMessage):
         pass
 
-    def delete_message(self, _id: str):
+    def delete_message(self, _id: PydanticObjectId):
         pass
