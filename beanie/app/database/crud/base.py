@@ -28,6 +28,9 @@ class BaseCrud(CrudMixins):
         ).sort("-created_at"
                ).to_list()
         return all_obj
+    
+    async def get(self, _id: str) -> Document:
+        return await self.model.get(_id)
 
     async def get_by_uid(self, uid: str) -> Document:
         obj = await self.model.find(self.model.uid == uid).first_or_none()

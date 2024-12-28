@@ -1,5 +1,5 @@
 import uuid
-from app.api.views.users.crud import BaseCrud, UserCrud
+from app.api.views.users.crud import UserCrud
 from app.api.views.users import schema
 
 
