@@ -1,16 +1,16 @@
 from beanie import PydanticObjectId
-from pydantic import BaseModel
+from pydantic import BaseModel, UUID4
 
 
 class CreateMessage(BaseModel):
-    sent_to: PydanticObjectId
-    sent_by: PydanticObjectId
+    sent_to: int
+    sent_by: int
     text: str
 
 
 class CreateGroupMessage(BaseModel):
-    sent_by: PydanticObjectId
-    group_id: PydanticObjectId
+    sent_by: int
+    group_id: UUID4
     text: str
 
 
