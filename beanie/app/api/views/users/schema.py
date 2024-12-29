@@ -13,14 +13,12 @@ class UserBase(BaseModel):
 
 
 class UserOut(UserBase):
-    id: int
     uid: UUID4
     created_at: datetime
     modified_at: datetime
 
 
 class UserCreate(UserBase):
-    id: int
     uid: UUID4
 
 

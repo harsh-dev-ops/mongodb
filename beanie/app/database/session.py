@@ -4,12 +4,16 @@ from beanie import init_beanie
 from contextlib import asynccontextmanager
 from logging import info
 
+from app.api.views.chat_rooms.models import ChatRoomModel
+from app.api.views.chats.models import ChatModel
 from app.api.views.users.models import UserModel
 from app.conf.settings import settings
 
 
 document_models = [
-    UserModel
+    UserModel, 
+    ChatModel,
+    ChatRoomModel
     ]
 
 

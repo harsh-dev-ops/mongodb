@@ -20,25 +20,25 @@ async def get_chat(objId: PydanticObjectId):
     service = factory.chat_service()
     return await service.get_chat(objId)
 
-@router.post('/message')
-async def create_chat(payload: CreateMessage):
+@router.post('')
+async def create_message(payload: CreateMessage):
     factory = ChatServiceFactory()
     service = factory.chat_service()
-    return await service.create_chat(payload)
+    return await service.create_message(payload)
 
 
-@router.patch('/message')
+@router.patch('')
 async def update_message(payload: UpdateMessage):
     factory = ChatServiceFactory()
     service = factory.chat_service()
     return await service.update_message(payload)
 
 
-@router.patch('/group-message')
-async def update_group_message(payload: CreateGroupMessage):
+@router.post('/group-message')
+async def create_group_message(payload: CreateGroupMessage):
     factory = ChatServiceFactory()
     service = factory.chat_service()
-    return await service.update_group_message(payload)
+    return await service.create_group_message(payload)
 
 
 @router.delete('/{objId}')

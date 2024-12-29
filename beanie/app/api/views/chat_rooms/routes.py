@@ -8,12 +8,12 @@ from pydantic import UUID4
 router = APIRouter()
 
 
-@router.get('/{user_id}')
-async def get_chat_rooms(user_id: int):
+@router.get('/{user_uid}')
+async def get_chat_rooms(user_uid: UUID4):
     pass
 
 @router.get('/members')
-async def get_room_members(chat_room_uid: uuid.UUID):
+async def get_room_members(chat_room_uid: UUID4):
     pass
 
 

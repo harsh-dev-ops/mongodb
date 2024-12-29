@@ -3,7 +3,7 @@ from typing import List
 from datetime import datetime
 
 from fastapi import HTTPException
-from app.database.models.base import Base
+from app.database.models.base import BaseDocument
 
 
 class CrudMixins:
@@ -45,7 +45,7 @@ class BaseCrud(CrudMixins):
         obj = await self.model.find_one(self.model.id == id)
         await self.update_obj(obj, data)
     
-    async def update_obj(self, obj: Base, data: dict) -> Document:
+    async def update_obj(self, obj: BaseDocument, data: dict) -> Document:
         await self.missing_obj(obj)
         for key, value in data.items():
             setattr(obj, key, value)

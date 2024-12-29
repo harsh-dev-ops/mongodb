@@ -3,7 +3,7 @@ from pydantic import Field
 from datetime import datetime
 
 
-class Base(Document):
+class BaseDocument(Document):
     created_at: datetime = Field(default_factory=datetime.now)
     modified_at: datetime = Field(
         default_factory=datetime.now)

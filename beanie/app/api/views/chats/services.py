@@ -15,8 +15,8 @@ class ChatService:
     def get_chat(self, objId: PydanticObjectId):
         pass
 
-    def create_chat(self, payload: schemas.CreateMessage):
-        pass
+    async def create_message(self, payload: schemas.CreateMessage):
+        return await self.chat_crud.create_message(payload.model_dump())
 
     def create_group_message(self, payload: schemas.CreateGroupMessage):
         pass

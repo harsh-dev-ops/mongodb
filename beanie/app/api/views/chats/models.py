@@ -1,13 +1,12 @@
 from typing import List
 import uuid
 from beanie import BackLink, Document, Link, PydanticObjectId
-from app.api.views.users.models import UserModel
-from app.database.models.base import Base
-from pydantic import UUID4, BaseModel, Field
+from app.database.models.base import BaseDocument
+from pydantic import UUID4, Field
 
-class ChatModel(Base):
+class ChatModel(BaseDocument):
     text: str
-    author_id: int
+    author_uid: UUID4
     chat_room_uid: UUID4
 
     class Settings:
