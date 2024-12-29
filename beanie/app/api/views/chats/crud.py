@@ -10,12 +10,8 @@ from app.api.views.chat_rooms.models import ChatRoomModel
 class ChatCrud(BaseCrud):
     def __init__(self, model: ChatModel=ChatModel):
         super().__init__(model=model)
-
-    async def get_author(self, author_uid: UUID4):
-        user_crud = UserCrud()
-        return await user_crud.get_by_uid(author_uid)
         
-    async def create_message(self, data: dict):
+    async def create_1to1_message(self, data: dict):
 
         sent_to, sent_by = data['sent_to'], data['sent_by']
 
@@ -27,15 +23,28 @@ class ChatCrud(BaseCrud):
             chat_room = ChatRoomModel(members=[sent_to, sent_by])
             await chat_room.insert()
 
-        chat = await self.create({
-            'author_uid': sent_by, 
-            'text': data['text'], 
-            'chat_room_uid': chat_room.uid
+        return await self.create_message(
+            sent_by,
+            {
+                'text': data['text'],
+                'chat_room_uid': chat_room.uid
+            }
+        )
+        
+    
+    async def create_message(self, author_uid: UUID4, data: dict):
+        
+        user_crud = UserCrud()
+        author = await user_crud.get_by_uid(author_uid)
+        
+        return await self.create({
+            **data,
+            'author': author,
         })
-
-        author = await self.get_author(chat.author_uid)
-        chat.author = author
-        return chat
+    
+    async def create_group_message(self, data: dict):
+        pass
+        
 
 
 

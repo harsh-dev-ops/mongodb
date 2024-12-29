@@ -27,7 +27,6 @@ class UserOut(BaseModel):
 class ChatMessageOut(BaseModel):
     id: PydanticObjectId
     text: str
-    author_uid: UUID4
     author: UserOut | None = None
 
     
