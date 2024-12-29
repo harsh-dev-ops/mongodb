@@ -1,5 +1,6 @@
 from beanie import Document
 from typing import List
+from bson import ObjectId
 from datetime import datetime
 
 from fastapi import HTTPException
@@ -30,7 +31,7 @@ class BaseCrud(CrudMixins):
         return all_obj
     
     async def get(self, _id: str) -> Document:
-        return await self.model.get(_id)
+        return await self.model.get(str(_id))
 
     async def get_by_uid(self, uid: str) -> Document:
         obj = await self.model.find(self.model.uid == uid).first_or_none()

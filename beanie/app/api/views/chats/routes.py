@@ -1,26 +1,28 @@
 from beanie import PydanticObjectId
+from bson import ObjectId
 from fastapi import APIRouter
 
 import uuid
 from app.api.views.chats.factory import ChatServiceFactory
-from app.api.views.chats.schemas import CreateMessage, CreateGroupMessage, UpdateMessage
+from app.api.views.chats.schemas import CreateMessage, CreateGroupMessage, UpdateMessage, ChatMessageOut
 
 
 router = APIRouter()
 
-@router.get('/{chat_room_uid}')
+@router.get('')
 async def get_chats(chat_room_uid: uuid.UUID):
     factory = ChatServiceFactory()
     service = factory.chat_service()
     return await service.get_chats(chat_room_uid)
 
-@router.get('/{objId}')
-async def get_chat(objId: PydanticObjectId):
+@router.get('/{objId}', response_model=ChatMessageOut)
+async def get_chat(objId: str):
     factory = ChatServiceFactory()
     service = factory.chat_service()
     return await service.get_chat(objId)
 
-@router.post('')
+
+@router.post('', response_model=ChatMessageOut)
 async def create_message(payload: CreateMessage):
     factory = ChatServiceFactory()
     service = factory.chat_service()

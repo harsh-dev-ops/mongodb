@@ -1,5 +1,5 @@
 from beanie import PydanticObjectId
-from pydantic import BaseModel, UUID4
+from pydantic import BaseModel, UUID4, EmailStr
 
 
 class CreateMessage(BaseModel):
@@ -17,6 +17,18 @@ class CreateGroupMessage(BaseModel):
 class UpdateMessage(BaseModel):
     objId: PydanticObjectId
     text: str | None = None
+
+class UserOut(BaseModel):
+    id: PydanticObjectId
+    uid: UUID4
+    name: str
+    email: EmailStr
+
+class ChatMessageOut(BaseModel):
+    id: PydanticObjectId
+    text: str
+    author_uid: UUID4
+    author: UserOut | None = None
 
     
 

@@ -12,8 +12,12 @@ class ChatService:
     def get_chats(self, chat_room_uid: uuid.UUID):
         pass
 
-    def get_chat(self, objId: PydanticObjectId):
-        pass
+    async def get_chat(self, objId: PydanticObjectId):
+        chat = await self.chat_crud.get(objId)
+        author = await self.chat_crud.get_author(chat.author_uid)
+        chat.author = author
+        return chat
+
 
     async def create_message(self, payload: schemas.CreateMessage):
         return await self.chat_crud.create_message(payload.model_dump())
