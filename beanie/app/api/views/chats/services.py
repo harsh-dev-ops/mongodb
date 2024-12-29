@@ -16,15 +16,15 @@ class ChatService:
         chat = await self.chat_crud.get(objId)
         return chat
 
-
     async def create_message(self, payload: schemas.CreateMessage):
         return await self.chat_crud.create_1to1_message(payload.model_dump())
 
-    def create_group_message(self, payload: schemas.CreateGroupMessage):
-        pass
+    async def create_group_message(self, payload: schemas.CreateGroupMessage):
+        return await self.chat_crud.create_group_message(payload.model_dump())
 
-    def update_message(self, payload: schemas.UpdateMessage):
-        pass
+    async def update_message(self, payload: schemas.UpdateMessage):
+        return await self.chat_crud.update(
+            payload.objId, payload.model_dump(exclude=['objId']))
 
-    def delete_message(self, objId: PydanticObjectId):
-        pass
+    async def delete_message(self, objId: PydanticObjectId):
+        return await self.chat_crud.delete(objId)

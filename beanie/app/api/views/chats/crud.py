@@ -14,41 +14,26 @@ class ChatCrud(BaseCrud):
     async def create_1to1_message(self, data: dict):
 
         sent_to, sent_by = data['sent_to'], data['sent_by']
-
-        chat_room = await ChatRoomModel.find({
-            "members": {"$all": [sent_to, sent_by]}
-            }).first_or_none()
+        chat_room = await ChatRoomModel.find({"members": {
+            "$all": [sent_to, sent_by]
+            }}).first_or_none()
         
         if not chat_room:
             chat_room = ChatRoomModel(members=[sent_to, sent_by])
             await chat_room.insert()
 
         return await self.create_message(
-            sent_by,
-            {
-                'text': data['text'],
-                'chat_room_uid': chat_room.uid
-            }
-        )
+            sent_by,{'text': data['text'],'chat_room_uid': chat_room.uid})
         
     
     async def create_message(self, author_uid: UUID4, data: dict):
-        
         user_crud = UserCrud()
         author = await user_crud.get_by_uid(author_uid)
-        
-        return await self.create({
-            **data,
-            'author': author,
-        })
+        return await self.create({**data,'author': author})
     
     async def create_group_message(self, data: dict):
+        sent_by = data.pop('sent_by')
+        return await self.create_message(sent_by, data)
+
+    async def get_group_messages(self, chat_room_uid: UUID4, page: int = 1, page_size: int = 10):
         pass
-        
-
-
-
-
-
-
-

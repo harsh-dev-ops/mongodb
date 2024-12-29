@@ -25,7 +25,7 @@ class UserOut(BaseModel):
     email: EmailStr
 
 class ChatMessageOut(BaseModel):
-    id: PydanticObjectId
+    objId: PydanticObjectId
     text: str
     author: UserOut | None = None
 

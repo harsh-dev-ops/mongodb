@@ -4,6 +4,7 @@ from bson import ObjectId
 from datetime import datetime
 
 from fastapi import HTTPException
+from pydantic import UUID4
 from app.database.models.base import BaseDocument
 
 
@@ -11,13 +12,21 @@ class CrudMixins:
     def __init__(self, model: Document):
         self.model = model
 
-    async def missing_obj(
-        self,
-        obj: Document
-    ) -> None:
+    async def missing_obj(self,obj: Document) -> None:
         if obj is None:
             raise HTTPException(404, "Object not found")
         return None
+    
+    async def update_obj(self, obj: BaseDocument, data: dict) -> Document:
+        await self.missing_obj(obj)
+        for key, value in data.items():
+            setattr(obj, key, value)
+        await obj.save()
+        return obj
+    
+    async def delete_obj(self, obj: Document):
+        await self.missing_obj(obj)
+        await obj.delete()
 
 
 class BaseCrud(CrudMixins):
@@ -25,13 +34,10 @@ class BaseCrud(CrudMixins):
         super().__init__(model=model)
 
     async def get_all(self) -> List[Document]:
-        all_obj = await self.model.find_all(
-        ).sort("-created_at"
-               ).to_list()
-        return all_obj
+        return await self.model.find_all().sort("-created_at").to_list()
     
-    async def get(self, _id: str) -> Document:
-        return await self.model.get(str(_id), fetch_links=True)
+    async def get(self, _id: str, fetch_links: bool = True) -> Document:
+        return await self.model.get(str(_id), fetch_links=fetch_links)
 
     async def get_by_uid(self, uid: str) -> Document:
         obj = await self.model.find(self.model.uid == uid).first_or_none()
@@ -43,21 +49,16 @@ class BaseCrud(CrudMixins):
         return await obj.insert()
 
     async def update(self, id: str, data: dict) -> Document:
-        obj = await self.model.find_one(self.model.id == id)
-        await self.update_obj(obj, data)
-    
-    async def update_obj(self, obj: BaseDocument, data: dict) -> Document:
-        await self.missing_obj(obj)
-        for key, value in data.items():
-            setattr(obj, key, value)
-        await obj.save()
-        return obj
+        obj = await self.get(id, fetch_links=False)
+        return await self.update_obj(obj, data)
 
+    async def update_by_uid(self, uid: UUID4, data:dict) -> Document:
+        obj = await self.get_by_uid(uid)
+        return await self.update_obj(obj, data)
+    
     async def delete(self, id: str) -> Document:
-        obj = await self.model.find_one(self.model.id == id)
+        obj = await self.model.get(id, fetch_links=False)
         await self.delete_obj(obj)
     
-    async def delete_obj(self, obj: Document):
-        await self.missing_obj(obj)
-        await obj.delete()
+    
 
