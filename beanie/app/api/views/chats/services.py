@@ -9,10 +9,10 @@ class ChatService:
     def __init__(self, chat_crud: ChatCrud):
         self.chat_crud = chat_crud
 
-    def get_chats(self, group_uid: uuid.UUID):
+    def get_chats(self, chat_room_uid: uuid.UUID):
         pass
 
-    def get_chat(self, _id: PydanticObjectId):
+    def get_chat(self, objId: PydanticObjectId):
         pass
 
     def create_chat(self, payload: schemas.CreateMessage):
@@ -24,8 +24,5 @@ class ChatService:
     def update_message(self, payload: schemas.UpdateMessage):
         pass
 
-    def update_group_message(self, payload: schemas.UpdateGroupMessage):
-        pass
-
-    def delete_message(self, _id: PydanticObjectId):
+    def delete_message(self, objId: PydanticObjectId):
         pass

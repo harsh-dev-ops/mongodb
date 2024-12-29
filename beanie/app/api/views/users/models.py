@@ -10,8 +10,6 @@ class UserModel(Base):
     name: str
     email: str
     superuser: bool = False
-    # messages: List[BackLink["ChatModel"]]
-    # chat_rooms: List[BackLink["ChatRoomModel"]]
 
     class Settings:
         name = "users"

@@ -10,16 +10,12 @@ class CreateMessage(BaseModel):
 
 class CreateGroupMessage(BaseModel):
     sent_by: int
-    group_id: UUID4
+    chat_room_uid: UUID4
     text: str
 
 
 class UpdateMessage(BaseModel):
-    id: PydanticObjectId
-    text: str | None = None
-
-class UpdateGroupMessage(BaseModel):
-    id: PydanticObjectId
+    objId: PydanticObjectId
     text: str | None = None
 
     
