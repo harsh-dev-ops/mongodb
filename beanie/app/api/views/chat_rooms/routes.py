@@ -1,18 +1,21 @@
+from bson import ObjectId
 from fastapi import APIRouter, status
 import uuid
+from typing import List
 from pydantic import UUID4
 
 from app.api.views.chat_rooms.factory import ChatRoomServiceFactory
+from app.api.views.chat_rooms.schemas import ChatRoomOut, CreateRoom
 
 
 router = APIRouter()
 
 
-@router.get('/{user_uid}')
-async def get_chat_rooms(user_uid: UUID4, page: int = 1, page_size: int = 50):
+@router.get('/{user_uid}', response_model=List[ChatRoomOut], status_code=status.HTTP_200_OK)
+async def get_chat_rooms(user_uid: str, mode="OneToOne", page: int = 1, page_size: int = 50):
     factory = ChatRoomServiceFactory()
     service = factory.chat_room_service()
-    return await service.get_chat_rooms(user_uid, page, page_size)
+    return await service.get_chat_rooms(user_uid, mode, page, page_size)
 
 @router.get('/members')
 async def get_room_members(chat_room_uid: UUID4, page: int = 1, page_size: int = 50):
@@ -28,8 +31,8 @@ async def get_chat_room(chat_room_uid: UUID4):
     return await service.get_chat_room(chat_room_uid)
 
 
-@router.post('')
-async def create_chat_room(payload):
+@router.post('', response_model=ChatRoomOut)
+async def create_chat_room(payload: CreateRoom):
     factory = ChatRoomServiceFactory()
     service = factory.chat_room_service()
     return await service.create_chat_room(payload)

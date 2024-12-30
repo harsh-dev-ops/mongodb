@@ -36,8 +36,8 @@ class ChatCrud(BaseCrud):
         await self.missing_obj(chat_room)
         return await self.create_message(sent_by, data)
 
-    async def get_group_messages(self, chat_room_uid: UUID4, 
-                                 page: int = 1, page_size: int = 10):
+    async def get_group_messages(self, chat_room_uid: UUID4, page: int = 1, page_size: int = 10):
         messages = self.model.find(
-            self.model.chat_room_uid == chat_room_uid, fetch_links=True)
+            self.model.chat_room_uid == chat_room_uid, 
+            fetch_links=True)
         return await self.pagination(messages, page, page_size)
