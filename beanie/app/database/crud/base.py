@@ -28,6 +28,12 @@ class CrudMixins:
         await self.missing_obj(obj)
         await obj.delete()
 
+    async def pagination(self, query, page: int =1, page_size: int = 50):
+        skip = page_size * (page - 1)
+        limit = page_size
+        return await query.skip(skip).limit(limit).to_list()
+
+
 
 class BaseCrud(CrudMixins):
     def __init__(self, model: Document):

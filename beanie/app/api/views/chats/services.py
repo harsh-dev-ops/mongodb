@@ -9,8 +9,8 @@ class ChatService:
     def __init__(self, chat_crud: ChatCrud):
         self.chat_crud = chat_crud
 
-    def get_chats(self, chat_room_uid: uuid.UUID):
-        pass
+    async def get_chats(self, chat_room_uid: uuid.UUID, page: int = 1, page_size: int = 10):
+        return await self.chat_crud.get_group_messages(chat_room_uid, page, page_size)
 
     async def get_chat(self, objId: PydanticObjectId):
         chat = await self.chat_crud.get(objId)

@@ -8,7 +8,7 @@ from app.api.views.chat_rooms.models import ChatRoomModel
 
 
 class ChatCrud(BaseCrud):
-    def __init__(self, model: ChatModel=ChatModel):
+    def __init__(self, model=ChatModel):
         super().__init__(model=model)
         
     async def create_1to1_message(self, data: dict):
@@ -25,7 +25,6 @@ class ChatCrud(BaseCrud):
         return await self.create_message(
             sent_by,{'text': data['text'],'chat_room_uid': chat_room.uid})
         
-    
     async def create_message(self, author_uid: UUID4, data: dict):
         user_crud = UserCrud()
         author = await user_crud.get_by_uid(author_uid)
@@ -33,7 +32,12 @@ class ChatCrud(BaseCrud):
     
     async def create_group_message(self, data: dict):
         sent_by = data.pop('sent_by')
+        chat_room = await ChatRoomModel.find({"members": sent_by}).first_or_none()
+        await self.missing_obj(chat_room)
         return await self.create_message(sent_by, data)
 
-    async def get_group_messages(self, chat_room_uid: UUID4, page: int = 1, page_size: int = 10):
-        pass
+    async def get_group_messages(self, chat_room_uid: UUID4, 
+                                 page: int = 1, page_size: int = 10):
+        messages = self.model.find(
+            self.model.chat_room_uid == chat_room_uid, fetch_links=True)
+        return await self.pagination(messages, page, page_size)

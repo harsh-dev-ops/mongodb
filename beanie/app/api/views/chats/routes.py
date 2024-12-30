@@ -1,3 +1,4 @@
+from typing import List
 from beanie import PydanticObjectId
 from bson import ObjectId
 from fastapi import APIRouter
@@ -9,11 +10,11 @@ from app.api.views.chats.schemas import CreateMessage, CreateGroupMessage, Updat
 
 router = APIRouter()
 
-@router.get('')
-async def get_chats(chat_room_uid: uuid.UUID):
+@router.get('', response_model=List[ChatMessageOut])
+async def get_chats(chat_room_uid: uuid.UUID, page: int = 1, page_size: int = 10):
     factory = ChatServiceFactory()
     service = factory.chat_service()
-    return await service.get_chats(chat_room_uid)
+    return await service.get_chats(chat_room_uid, page, page_size)
 
 @router.get('/{objId}', response_model=ChatMessageOut)
 async def get_chat(objId: str):

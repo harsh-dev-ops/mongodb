@@ -22,10 +22,10 @@ class UserOut(BaseModel):
     id: PydanticObjectId
     uid: UUID4
     name: str
-    email: EmailStr
+    # email: EmailStr
 
 class ChatMessageOut(BaseModel):
-    objId: PydanticObjectId
+    id: PydanticObjectId
     text: str
     author: UserOut | None = None
 
