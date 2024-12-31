@@ -13,8 +13,8 @@ class ChatRoomService:
     async def get_chat_rooms(self, user_uid: ObjectId, mode: str, page: int = 1, page_size: int = 50):
         return await self.chat_room_crud.get_user_rooms(user_uid, mode, page, page_size)
 
-    async def get_room_members(self, chat_room_uid: UUID4, page: int = 1, page_size: int = 50):
-        pass
+    async def get_room_members(self, chat_room_id: str, page: int = 1, page_size: int = 50):
+        return await self.chat_room_crud.get_room_members(chat_room_id, page, page_size)
     
     async def get_chat_room(self, chat_room_uid: UUID4):
         pass

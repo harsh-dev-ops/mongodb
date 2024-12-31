@@ -1,7 +1,7 @@
 
 from typing import List
 from beanie import PydanticObjectId
-from bson import DBRef, ObjectId
+from bson import DBRef, ObjectId, Binary
 from pydantic import UUID4
 from app.api.views.users.models import UserModel
 from app.database.crud.base import BaseCrud
@@ -28,7 +28,7 @@ class ChatRoomCrud(BaseCrud):
             )
     
     async def add_members(self, _id: PydanticObjectId, member_ids: List[PydanticObjectId]):
-        room = await ChatRoomModel.get(_id)
+        room = await self.model.get(_id)
         room.members.extend(
             [DBRef(UserModel.Settings.name, member_id) for member_id in member_ids]
         )
@@ -37,11 +37,17 @@ class ChatRoomCrud(BaseCrud):
     
     async def remove_members(self, _id: PydanticObjectId, member_ids: List[PydanticObjectId]):
         
-        room = await ChatRoomModel.get(_id)
+        room = await self.model.get(_id)
         for member_id in member_ids:
             room.members.remove(
                 DBRef(UserModel.Settings.name, member_id)
                 )
         await room.save()
         return room
-        
+    
+    async def get_room_members(self, chat_room_id: str, page: int = 1, page_size: int = 50):
+        room = await self.get(chat_room_id)
+        return room.members
+
+
+
