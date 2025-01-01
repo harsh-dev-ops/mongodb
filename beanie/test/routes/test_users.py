@@ -14,7 +14,7 @@ def update_user_data(data: dict):
 
 
 class TestUserApi:
-    enpoint_url = "/users"
+    enpoint_url = "/api/users"
     user_data = UserData()
 
     @pytest.mark.asyncio
