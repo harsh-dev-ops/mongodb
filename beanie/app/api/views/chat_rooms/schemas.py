@@ -12,6 +12,7 @@ class RoomMemberOut(BaseModel):
 
 class ChatRoomOut(BaseModel):
     id: PydanticObjectId
+    uid: UUID4
     name: str
     mode: str
     created_at: datetime
@@ -20,15 +21,16 @@ class ChatRoomOut(BaseModel):
 
 
 class CreateRoom(BaseModel):
+    uid: UUID4 | None = None
     name: str
     member_ids: List[PydanticObjectId] | None = None
     mode: str = "SubTask"
 
 
 class UpdateRoom(BaseModel):
-    id: str
-    name: str
-    mode: str = "SubTask"
+    id: PydanticObjectId
+    name: str | None = None
+    mode: str | None = None
 
 class AddMembers(BaseModel):
     id: str

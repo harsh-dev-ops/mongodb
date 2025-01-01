@@ -1,3 +1,4 @@
+from uuid import uuid4
 from beanie import Document
 from typing import List
 from bson import ObjectId
@@ -64,6 +65,10 @@ class BaseCrud(CrudMixins):
     
     async def delete(self, id: str) -> Document:
         obj = await self.model.get(id, fetch_links=False)
+        await self.delete_obj(obj)
+
+    async def delete_by_uid(self, uid: UUID4):
+        obj = await self.get_by_uid(uid)
         await self.delete_obj(obj)
     
     

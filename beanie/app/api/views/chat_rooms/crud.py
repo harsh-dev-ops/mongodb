@@ -13,19 +13,15 @@ class ChatRoomCrud(BaseCrud):
         super().__init__(model=model)
 
     async def get_user_rooms(self, user_id: ObjectId, mode: str, page: int = 1, page_size: int = 50):
-        rooms = self.model.find(
-            {'members.$id': user_id},
-            {'mode': mode}
-        )
+        
+        rooms = self.model.find({'members.$id': user_id},{'mode': mode})
         return await self.pagination(rooms, page, page_size)
     
     async def create_room(self, data:dict):
-        member_ids = data.pop('member_ids')
+
+        member_ids = data.pop('member_ids', [])
         members = [DBRef(UserModel.Settings.name, member_id) for member_id in member_ids]
-        return await self.create(
-            {**data,
-            'members': members}
-            )
+        return await self.create({**data, 'members': members})
     
     async def add_members(self, _id: PydanticObjectId, member_ids: List[PydanticObjectId]):
         room = await self.model.get(_id)
