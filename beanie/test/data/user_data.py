@@ -18,10 +18,6 @@ class UserData:
     def __init__(self):
         self.users = []
 
-    @property
-    def user_uids(self) -> list:
-        return [user.uid for user in self.users]
-
     def generate(self) -> UserSchema:
         data = {
             "name": faker.name(),
@@ -44,3 +40,10 @@ class UserData:
 
     def remove(self, user: UserSchema) -> None:
         self.users.remove(user)
+
+    def remove_all(self) -> None:
+        self.users = []
+
+    @property
+    def user_uids(self) -> list:
+        return [user.uid for user in self.users]
