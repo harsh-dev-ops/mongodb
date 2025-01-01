@@ -22,7 +22,7 @@ class UserData:
     def user_uids(self) -> list:
         return [user.uid for user in self.users]
 
-    def generate(self) -> BaseModel:
+    def generate(self) -> UserSchema:
         data = {
             "name": faker.name(),
             "email": faker.email(),

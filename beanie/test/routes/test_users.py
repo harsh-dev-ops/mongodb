@@ -28,6 +28,7 @@ class TestUserApi:
         user = self.user_data.generate()
         data = user.model_dump(exclude_none=True)
         response = await client.post(url=f"{self.enpoint_url}", json=data)
+        user.id = response.json()['id']
         assert response.json()['uid'] == data['uid']
         assert response.status_code == 201
 
