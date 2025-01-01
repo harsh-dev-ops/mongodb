@@ -5,3 +5,4 @@ python-multipart
 fastapi[all]
 uvicorn
 pytz
+faker

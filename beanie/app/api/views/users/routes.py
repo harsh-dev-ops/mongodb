@@ -8,11 +8,13 @@ from app.api.views.users.services import UserService
 
 router = APIRouter()
 
+
 @router.get('')
 async def get_all_users():
     factory = UserServiceFactory()
     service = factory.user_service()
     return await service.get_users()
+
 
 @router.get(
     '/{uid}',
@@ -24,6 +26,7 @@ async def get_user(uid: uuid.UUID):
     service = factory.user_service()
     return await service.get_user(uid)
 
+
 @router.post(
     '',
     summary="Create user",
@@ -34,6 +37,7 @@ async def create_user(payload: UserCreate):
     factory = UserServiceFactory()
     service = factory.user_service()
     return await service.create_user(payload)
+
 
 @router.patch(
     '',

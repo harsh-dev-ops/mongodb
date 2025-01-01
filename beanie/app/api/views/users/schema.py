@@ -13,13 +13,14 @@ class UserBase(BaseModel):
 
 
 class UserOut(UserBase):
+    id: PydanticObjectId
     uid: UUID4
     created_at: datetime
     modified_at: datetime
 
 
 class UserCreate(UserBase):
-    uid: UUID4
+    uid: UUID4 | None = None
 
 
 class UserUpdate(BaseModel):
