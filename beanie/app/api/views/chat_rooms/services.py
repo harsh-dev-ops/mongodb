@@ -15,10 +15,10 @@ class ChatRoomService:
 
     async def get_room_members(self, chat_room_id: str, page: int = 1, page_size: int = 50):
         return await self.chat_room_crud.get_room_members(chat_room_id, page, page_size)
-    
+
     async def get_chat_room(self, chat_room_uid: UUID4):
         return await self.chat_room_crud.get_by_uid(chat_room_uid)
-    
+
     async def create_chat_room(self, payload: schemas.CreateRoom):
         data = payload.model_dump(exclude_none=True)
         return await self.chat_room_crud.create_room(data)
