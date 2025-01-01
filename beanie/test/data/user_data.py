@@ -33,5 +33,14 @@ class UserData:
         self.users.append(user)
         return user
 
+    def update(self) -> list:
+        data = {
+            "name": faker.name(),
+            "email": faker.email()
+        }
+        for key, value in data.items():
+            setattr(self.users[0], key, value)
+        return self.users[0]
+
     def remove(self, user: UserSchema) -> None:
         self.users.remove(user)

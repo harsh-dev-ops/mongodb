@@ -32,6 +32,15 @@ class TestUserApi:
         assert response.status_code == 201
 
     @pytest.mark.asyncio
+    async def test_update_user(self, client: AsyncClient):
+        user = self.user_data.update()
+        data = user.model_dump(exclude_none=True)
+        response = await client.patch(url=f"{self.enpoint_url}", json=data)
+        for key in ['uid', 'name', 'email']:
+            assert response.json()[key] == data[key]
+        assert response.status_code == 200
+
+    @pytest.mark.asyncio
     async def test_get_user(self, client: AsyncClient):
         uid = self.user_data.user_uids[0]
         response = await client.get(url=f"{self.enpoint_url}/{uid}")
